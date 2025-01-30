@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Cards {
@@ -14,7 +15,8 @@ public class Cards {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
 
-    private String PV;
+    @JsonProperty("pv")
+    private Integer PV;
 
     private String nom;
 
@@ -28,9 +30,21 @@ public class Cards {
     @JoinColumn(name = "attaque2_uuid")
     private Attaque attaque2;
 
-    public String getPV() { return PV; }
+    public String getUuid() {
+        return uuid;
+    }
 
-    public void setPV(String PV) { this.PV = PV; }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Integer getPV() {
+        return PV;
+    }
+
+    public void setPV(Integer PV) {
+        this.PV = PV;
+    }
 
     public String getNom() {
         return nom;
@@ -40,19 +54,27 @@ public class Cards {
         this.nom = nom;
     }
 
-    public String getRarity() { return rarity; }
+    public String getRarity() {
+        return rarity;
+    }
 
-    public void setRarity(String rarity) { this.rarity = rarity; }
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
+    }
 
-    public Attaque getAttaque1() { return attaque1; }
+    public Attaque getAttaque1() {
+        return attaque1;
+    }
 
-    public void setAttaque1(Attaque attaque1) { this.attaque1 = attaque1; }
+    public void setAttaque1(Attaque attaque1) {
+        this.attaque1 = attaque1;
+    }
 
-    public Attaque getAttaque2() { return attaque2; }
+    public Attaque getAttaque2() {
+        return attaque2;
+    }
 
-    public void setAttaque2(Attaque attaque2) { this.attaque2 = attaque2; }
-
-    public String getUuid() { return uuid; }
-
-
+    public void setAttaque2(Attaque attaque2) {
+        this.attaque2 = attaque2;
+    }
 }

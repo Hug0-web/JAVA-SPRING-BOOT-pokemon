@@ -7,6 +7,8 @@ import fr.efrei.pokemon_tcg.dto.CreateCards;
 import fr.efrei.pokemon_tcg.models.Attaque;
 import fr.efrei.pokemon_tcg.services.IAttaqueService;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
@@ -39,11 +41,17 @@ public class CardsServiceImpl implements ICardsService {
         
         if (createCards.getAttaque1Uuid() != null) {
             Attaque attaque1 = attaqueService.findById(createCards.getAttaque1Uuid());
+            if (attaque1 == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "la première attaque n'a pas été trouvée avec l'UUID " + createCards.getAttaque1Uuid());
+            }
             card.setAttaque1(attaque1);
         }
         
         if (createCards.getAttaque2Uuid() != null) {
             Attaque attaque2 = attaqueService.findById(createCards.getAttaque2Uuid());
+            if (attaque2 == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "la deuxième attaque n'a pas été trouvée avec l'UUID " + createCards.getAttaque2Uuid());
+            }
             card.setAttaque2(attaque2);
         }
         
