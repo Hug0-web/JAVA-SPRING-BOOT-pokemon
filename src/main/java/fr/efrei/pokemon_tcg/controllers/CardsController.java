@@ -28,7 +28,7 @@ public class CardsController {
     @GetMapping
     public ResponseEntity<List<Cards>> getAll() {
         List<Cards> allCards = cardsService.findAll();
-        List<Cards> limitedCards = allCards.stream().limit(5).collect(Collectors.toList());
+        List<Cards> limitedCards = allCards.stream().limit(100).collect(Collectors.toList());
         return new ResponseEntity<>(limitedCards, HttpStatus.OK);
     }
 
