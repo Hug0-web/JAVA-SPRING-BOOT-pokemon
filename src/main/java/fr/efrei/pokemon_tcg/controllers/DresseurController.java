@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/dresseurs")
-public class DresseurController {
+public class  DresseurController {
 
 	private final IDresseurService dresseurService;
 
