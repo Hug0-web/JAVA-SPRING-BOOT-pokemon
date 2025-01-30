@@ -3,6 +3,8 @@ package fr.efrei.pokemon_tcg.controllers;
 import fr.efrei.pokemon_tcg.models.Cards;
 import fr.efrei.pokemon_tcg.services.ICardsService;
 import fr.efrei.pokemon_tcg.services.implementations.CardsServiceImpl;
+import fr.efrei.pokemon_tcg.dto.CreateCards;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +36,8 @@ public class CardsController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createCard(@RequestBody Cards card) {
-        cardsService.save(card);
+    public ResponseEntity<?> createCard(@Valid @RequestBody CreateCards createCards) {
+        cardsService.create(createCards);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

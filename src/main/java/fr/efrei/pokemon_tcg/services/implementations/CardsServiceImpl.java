@@ -3,6 +3,9 @@ package fr.efrei.pokemon_tcg.services.implementations;
 import fr.efrei.pokemon_tcg.models.Cards;
 import fr.efrei.pokemon_tcg.repositories.CardsRepository;
 import fr.efrei.pokemon_tcg.services.ICardsService;
+import fr.efrei.pokemon_tcg.dto.CreateCards;
+import fr.efrei.pokemon_tcg.models.Attaque;
+import fr.efrei.pokemon_tcg.services.IAttaqueService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -10,9 +13,11 @@ import java.util.List;
 public class CardsServiceImpl implements ICardsService {
 
     private final CardsRepository repository;
+    private final IAttaqueService attaqueService;
 
-    public CardsServiceImpl(CardsRepository repository) {
+    public CardsServiceImpl(CardsRepository repository, IAttaqueService attaqueService) {
         this.repository = repository;
+        this.attaqueService = attaqueService;
     }
 
     @Override
@@ -26,7 +31,22 @@ public class CardsServiceImpl implements ICardsService {
     }
 
     @Override
-    public void save(Cards card) {
+    public void create(CreateCards createCards) {
+        Cards card = new Cards();
+        card.setNom(createCards.getNom());
+        card.setPV(createCards.getPV());
+        card.setRarity(createCards.getRarity());
+        
+        if (createCards.getAttaque1Uuid() != null) {
+            Attaque attaque1 = attaqueService.findById(createCards.getAttaque1Uuid());
+            card.setAttaque1(attaque1);
+        }
+        
+        if (createCards.getAttaque2Uuid() != null) {
+            Attaque attaque2 = attaqueService.findById(createCards.getAttaque2Uuid());
+            card.setAttaque2(attaque2);
+        }
+        
         repository.save(card);
     }
 
