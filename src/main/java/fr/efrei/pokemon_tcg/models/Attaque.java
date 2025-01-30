@@ -14,7 +14,7 @@ public class Attaque {
 
     private String nom;
 
-    private Integer degats;
+    private Integer degat;
 
     public String getNom() {
         return nom;
@@ -24,12 +24,12 @@ public class Attaque {
         this.nom = nom;
     }
 
-    public Integer getDegats() {
-        return degats;
+    public Integer getDegat() {
+        return degat;
     }
 
-    public void setDegats(Integer degats) {
-        this.degats = degats;
+    public void setDegat(Integer degat) {
+        this.degat = degat;
     }
 
     public String getUuid() {
