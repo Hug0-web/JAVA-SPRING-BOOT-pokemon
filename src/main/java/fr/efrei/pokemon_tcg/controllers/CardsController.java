@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cards")
@@ -26,7 +27,9 @@ public class CardsController {
 
     @GetMapping
     public ResponseEntity<List<Cards>> getAll() {
-        return new ResponseEntity<>(cardsService.findAll(), HttpStatus.OK);
+        List<Cards> allCards = cardsService.findAll();
+        List<Cards> limitedCards = allCards.stream().limit(5).collect(Collectors.toList());
+        return new ResponseEntity<>(limitedCards, HttpStatus.OK);
     }
 
     @GetMapping("/{uuid}")
