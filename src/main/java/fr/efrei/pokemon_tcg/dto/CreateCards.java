@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
 import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 public class CreateCards {
 
@@ -16,16 +16,16 @@ public class CreateCards {
     @NotNull
     @Min(10)
     @Max(300)
-    @JsonProperty("pv")
+
     private Integer PV;
 
     @NotBlank
     private String rarity;
 
-    @JsonProperty("attaque1")
+
     private AttaqueRef attaque1;
 
-    @JsonProperty("attaque2")
+
     private AttaqueRef attaque2;
 
     public static class AttaqueRef {
