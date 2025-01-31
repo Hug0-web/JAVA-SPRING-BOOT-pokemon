@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tirages")
@@ -24,12 +25,33 @@ public class TiragesController {
 
     @GetMapping("/random")
     public ResponseEntity<List<Cards>> getTirageAleatoire() {
-      
         List<Cards> allCards = cardsService.findAll();
         
-        Collections.shuffle(allCards);
+
+        List<Cards> fiveStarCards = allCards.stream()
+            .filter(card -> "5 étoiles".equals(card.getRarity()))
+            .collect(Collectors.toList());
         
-        List<Cards> randomCards = allCards.stream().limit(5).toList();
+        List<Cards> otherCards = allCards.stream()
+            .filter(card -> !"5 étoiles".equals(card.getRarity()))
+            .collect(Collectors.toList());
+        
+
+        Collections.shuffle(fiveStarCards);
+        Collections.shuffle(otherCards);
+        
+        List<Cards> randomCards = new ArrayList<>();
+        
+        if (!fiveStarCards.isEmpty() && Math.random() < 0.2) {
+            randomCards.add(fiveStarCards.get(0));
+        }
+        
+        while (randomCards.size() < 5 && !otherCards.isEmpty()) {
+            Cards card = otherCards.remove(0);
+            if (!randomCards.contains(card)) {
+                randomCards.add(card);
+            }
+        }
         
         return new ResponseEntity<>(randomCards, HttpStatus.OK);
     }
