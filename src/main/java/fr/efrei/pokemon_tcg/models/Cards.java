@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Cards {
@@ -15,7 +14,7 @@ public class Cards {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
 
-    @JsonProperty("pv")
+    
     private Integer PV;
 
     private String nom;
