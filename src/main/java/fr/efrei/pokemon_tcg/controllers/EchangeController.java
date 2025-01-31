@@ -2,6 +2,7 @@ package fr.efrei.pokemon_tcg.controllers;
 
 import fr.efrei.pokemon_tcg.services.EchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,16 +50,17 @@ public class EchangeController {
 
     @PostMapping
     public ResponseEntity<?> echangerCartes(@RequestBody EchangeRequest request) {
-        try {
-            boolean echangeReussi = echangeService.echangerCartes(
-                request.getDresseur1Id(), 
-                request.getDresseur2Id(), 
-                request.getCarteD1Id(), 
-                request.getCarteD2Id()
-            );
-            return ResponseEntity.ok("Échange réussi");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        boolean echangeReussi = echangeService.echangerCartes(
+            request.getDresseur1Id(), 
+            request.getDresseur2Id(), 
+            request.getCarteD1Id(), 
+            request.getCarteD2Id()
+        );
+        
+        if (echangeReussi) {
+            return new ResponseEntity<>(HttpStatus.OK);
         }
+        
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
